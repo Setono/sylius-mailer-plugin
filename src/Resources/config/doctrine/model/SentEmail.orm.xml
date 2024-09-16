@@ -5,7 +5,7 @@
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <mapped-superclass name="Setono\SyliusMailerPlugin\Model\Email"
+    <mapped-superclass name="Setono\SyliusMailerPlugin\Model\SentEmail"
                        table="setono_sylius_mailer__email">
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
