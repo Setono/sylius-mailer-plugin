@@ -32,8 +32,12 @@ final class SetonoSyliusMailerExtension extends AbstractResourceExtension
 
         $loader->load('services.xml');
 
-        if (!ContainerBuilder::willBeAvailable('symfony/mailer', MailerInterface::class, ['symfony/framework-bundle'])) {
+        if (ContainerBuilder::willBeAvailable('symfony/mailer', MailerInterface::class, ['symfony/framework-bundle'])) {
             $loader->load('services/conditional/symfony_mailer.xml');
+        }
+
+        if (ContainerBuilder::willBeAvailable('swiftmailer/swiftmailer', \Swift_Mailer::class, ['symfony/swiftmailer-bundle'])) {
+            $loader->load('services/conditional/swiftmailer.xml');
         }
     }
 }
