@@ -23,6 +23,7 @@ interface SentEmailInterface extends ResourceInterface, TimestampableInterface
 
     public function setHtmlBody(?string $htmlBody): void;
 
+    // todo refactor to getFrom(): array instead?
     public function getSenderName(): ?string;
 
     public function setSenderName(?string $senderName): void;
