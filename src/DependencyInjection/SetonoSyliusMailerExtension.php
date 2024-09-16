@@ -9,6 +9,7 @@ use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Mailer\MailerInterface;
 
 final class SetonoSyliusMailerExtension extends AbstractResourceExtension
 {
@@ -30,5 +31,9 @@ final class SetonoSyliusMailerExtension extends AbstractResourceExtension
         );
 
         $loader->load('services.xml');
+
+        if (!ContainerBuilder::willBeAvailable('symfony/mailer', MailerInterface::class, ['symfony/framework-bundle'])) {
+            $loader->load('services/conditional/symfony_mailer.xml');
+        }
     }
 }
