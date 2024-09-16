@@ -16,7 +16,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Part\TextPart;
 
-final class LogSymfonyEmailSubscriber implements EventSubscriberInterface
+final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
 {
     use ORMTrait;
 
