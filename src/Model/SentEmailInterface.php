@@ -7,7 +7,7 @@ namespace Setono\SyliusMailerPlugin\Model;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 
-interface EmailInterface extends ResourceInterface, TimestampableInterface
+interface SentEmailInterface extends ResourceInterface, TimestampableInterface
 {
     public function getId(): ?int;
 

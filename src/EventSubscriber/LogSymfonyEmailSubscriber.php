@@ -6,7 +6,7 @@ namespace Setono\SyliusMailerPlugin\EventSubscriber;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Setono\Doctrine\ORMTrait;
-use Setono\SyliusMailerPlugin\Model\EmailInterface;
+use Setono\SyliusMailerPlugin\Model\SentEmailInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,9 +23,9 @@ final class LogSymfonyEmailSubscriber implements EventSubscriberInterface
     /**
      * Emails indexed by object hash
      *
-     * @var array<string, EmailInterface>
+     * @var array<string, SentEmailInterface>
      */
-    private array $emails = [];
+    private array $sentEmails = [];
 
     public function __construct(
         ManagerRegistry $managerRegistry,
@@ -49,44 +49,44 @@ final class LogSymfonyEmailSubscriber implements EventSubscriberInterface
             return;
         }
 
-        /** @var EmailInterface $email */
-        $email = $this->emailFactory->createNew();
+        /** @var SentEmailInterface $sentEmail */
+        $sentEmail = $this->emailFactory->createNew();
 
-        $email->setSubject($message->getSubject());
-        $email->setTextBody(self::convertBody($message->getTextBody()));
-        $email->setHtmlBody(self::convertBody($message->getHtmlBody()));
+        $sentEmail->setSubject($message->getSubject());
+        $sentEmail->setTextBody(self::convertBody($message->getTextBody()));
+        $sentEmail->setHtmlBody(self::convertBody($message->getHtmlBody()));
 
         $from = $message->getFrom();
         if (count($from) > 0) {
-            $email->setSenderAddress($from[0]->getAddress());
+            $sentEmail->setSenderAddress($from[0]->getAddress());
 
             $senderName = $from[0]->getName();
-            $email->setSenderName('' === $senderName ? null : $senderName);
+            $sentEmail->setSenderName('' === $senderName ? null : $senderName);
         }
 
-        $email->setTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getTo())));
-        $email->setReplyTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getReplyTo())));
-        $email->setCc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getCc())));
-        $email->setBcc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getBcc())));
+        $sentEmail->setTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getTo())));
+        $sentEmail->setReplyTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getReplyTo())));
+        $sentEmail->setCc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getCc())));
+        $sentEmail->setBcc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getBcc())));
 
         if ($message instanceof TemplatedEmail) {
-            $email->setTemplate($message->getHtmlTemplate());
+            $sentEmail->setTemplate($message->getHtmlTemplate());
         }
 
-        $this->emails[spl_object_hash($message)] = $email;
+        $this->sentEmails[spl_object_hash($message)] = $sentEmail;
     }
 
     public function save(SentMessageEvent $event): void
     {
         $message = $event->getMessage()->getOriginalMessage();
-        if (!isset($this->emails[spl_object_hash($message)])) {
+        if (!isset($this->sentEmails[spl_object_hash($message)])) {
             return;
         }
 
-        $email = $this->emails[spl_object_hash($message)];
+        $sentEmail = $this->sentEmails[spl_object_hash($message)];
 
-        $manager = $this->getManager($email);
-        $manager->persist($email);
+        $manager = $this->getManager($sentEmail);
+        $manager->persist($sentEmail);
         $manager->flush();
     }
 

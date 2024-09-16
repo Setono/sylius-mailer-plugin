@@ -6,7 +6,7 @@ namespace Setono\SyliusMailerPlugin\Model;
 
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
-class Email implements EmailInterface
+class SentEmail implements SentEmailInterface
 {
     use TimestampableTrait;
 
