@@ -17,4 +17,5 @@ return (new Configuration())
         Symfony\Component\Mailer\Event\SentMessageEvent::class,
         Symfony\Component\Mailer\MailerInterface::class,
     ])
+    ->disableReportingUnmatchedIgnores()
 ;
