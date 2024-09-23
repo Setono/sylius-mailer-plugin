@@ -214,7 +214,7 @@ jobs:
                 symfony:
                     - "~5.4.0"
                     - "~6.4.0"
-
+                        
         steps:
             -   name: "Start MySQL"
                 run: "sudo /etc/init.d/mysql start"
@@ -236,6 +236,14 @@ jobs:
                     SYMFONY_REQUIRE: "${{ matrix.symfony }}"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
+                    
+            -   name: "Install symfony/swiftmailer-bundle if applicable"
+                if: "${{ matrix.symfony }} == '~5.4.0'"
+                run: "composer require symfony/swiftmailer-bundle"
+                
+            -   name: "Install symfony/mailer if applicable"
+                if: "${{ matrix.symfony }} == '~6.4.0'"
+                run: "composer require symfony/mailer"
 
             -   name: "Lint container"
                 run: "(cd tests/Application && bin/console lint:container)"
