@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusMailerPlugin\EventSubscriber;
+namespace Setono\SyliusMailerPlugin\EventListener;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Setono\Doctrine\ORMTrait;
 use Setono\SyliusMailerPlugin\Model\SentEmailInterface;
+use Swift_Events_SendEvent;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class SwiftMailerLoggerSubscriber implements EventSubscriberInterface
+final class SwiftMailerLoggerListener implements \Swift_Events_SendListener
 {
     use ORMTrait;
 
@@ -21,16 +21,14 @@ final class SwiftMailerLoggerSubscriber implements EventSubscriberInterface
         $this->managerRegistry = $managerRegistry;
     }
 
-    public static function getSubscribedEvents(): array
+    public function beforeSendPerformed(Swift_Events_SendEvent $evt): void
     {
-        return [
-            'sendPerformed' => 'log',
-        ];
+        // no op
     }
 
-    public function log(\Swift_Events_SendEvent $event): void
+    public function sendPerformed(Swift_Events_SendEvent $evt): void
     {
-        $message = $event->getMessage();
+        $message = $evt->getMessage();
 
         /** @var SentEmailInterface $sentEmail */
         $sentEmail = $this->emailFactory->createNew();
