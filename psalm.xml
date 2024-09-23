@@ -28,4 +28,13 @@
         <function name="var_dump"/>
         <function name="print_r"/>
     </forbiddenFunctions>
+    <issueHandlers>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <!-- The reason we do this is that the Symfony Mailer is an optional dependency -->
+                <referencedClass name="Symfony\Component\Mailer\Event\MessageEvent"/>
+                <referencedClass name="Symfony\Component\Mailer\Event\SentMessageEvent"/>
+            </errorLevel>
+        </UndefinedClass>
+    </issueHandlers>
 </psalm>

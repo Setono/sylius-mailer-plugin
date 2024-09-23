@@ -9,7 +9,6 @@ use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Mailer\MailerInterface;
 
 final class SetonoSyliusMailerExtension extends AbstractResourceExtension
 {
@@ -32,11 +31,11 @@ final class SetonoSyliusMailerExtension extends AbstractResourceExtension
 
         $loader->load('services.xml');
 
-        if (ContainerBuilder::willBeAvailable('symfony/mailer', MailerInterface::class, ['symfony/framework-bundle'])) {
+        if (ContainerBuilder::willBeAvailable('symfony/mailer', 'Symfony\Component\Mailer\MailerInterface', ['symfony/framework-bundle'])) {
             $loader->load('services/conditional/symfony_mailer.xml');
         }
 
-        if (ContainerBuilder::willBeAvailable('swiftmailer/swiftmailer', \Swift_Mailer::class, ['symfony/swiftmailer-bundle'])) {
+        if (ContainerBuilder::willBeAvailable('swiftmailer/swiftmailer', '\Swift_Mailer', ['symfony/swiftmailer-bundle'])) {
             $loader->load('services/conditional/swiftmailer.xml');
         }
     }
