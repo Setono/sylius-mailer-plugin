@@ -35,21 +35,28 @@ final class SwiftMailerLoggerListener implements \Swift_Events_SendListener
 
         $sentEmail->setSubject($message->getSubject());
         $sentEmail->setHtmlBody($message->getBody());
-
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        $sentEmail->setTo(array_keys($message->getTo()));
-
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        $sentEmail->setReplyTo(array_keys($message->getReplyTo()));
-
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        $sentEmail->setCc(array_keys($message->getCc()));
-
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        $sentEmail->setBcc(array_keys($message->getBcc()));
+        $sentEmail->setTo(self::convertAddresses($message->getTo()));
+        $sentEmail->setReplyTo(self::convertAddresses($message->getReplyTo()));
+        $sentEmail->setCc(self::convertAddresses($message->getCc()));
+        $sentEmail->setBcc(self::convertAddresses($message->getBcc()));
 
         $manager = $this->getManager($sentEmail);
         $manager->persist($sentEmail);
         $manager->flush();
+    }
+
+    /**
+     * @return list<string>|null
+     */
+    private static function convertAddresses(mixed $addresses): ?array
+    {
+        if (!is_array($addresses)) {
+            return null;
+        }
+
+        /** @var list<string> $addresses */
+        $addresses = array_keys($addresses);
+
+        return $addresses;
     }
 }
