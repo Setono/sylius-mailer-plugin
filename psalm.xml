@@ -36,5 +36,23 @@
                 <referencedClass name="Symfony\Component\Mailer\Event\SentMessageEvent"/>
             </errorLevel>
         </UndefinedClass>
+        <MixedAssignment>
+            <errorLevel type="suppress">
+                <!-- The reason we do this is that the Symfony Mailer is an optional dependency -->
+                <file name="src/EventSubscriber/SymfonyMailerLoggerSubscriber.php"/>
+            </errorLevel>
+        </MixedAssignment>
+        <MixedMethodCall>
+            <errorLevel type="suppress">
+                <!-- The reason we do this is that the Symfony Mailer is an optional dependency -->
+                <file name="src/EventSubscriber/SymfonyMailerLoggerSubscriber.php"/>
+            </errorLevel>
+        </MixedMethodCall>
+        <MixedArgument>
+            <errorLevel type="suppress">
+                <!-- The reason we do this is that the Symfony Mailer is an optional dependency -->
+                <file name="src/EventSubscriber/SymfonyMailerLoggerSubscriber.php"/>
+            </errorLevel>
+        </MixedArgument>
     </issueHandlers>
 </psalm>
