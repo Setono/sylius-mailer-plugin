@@ -58,6 +58,27 @@ final class SetonoSyliusMailerExtension extends AbstractResourceExtension implem
                     'limits' => [
                         100, 250, 500, 1000,
                     ],
+                    'filters' => [
+                        'search' => [
+                            'type' => 'string',
+                            'label' => 'sylius.ui.search',
+                            'options' => [
+                                'fields' => [
+                                    'subject',
+                                    'to',
+                                    'from',
+                                ],
+                            ],
+                        ],
+                        'createdAt' => [
+                            'type' => 'date',
+                            'label' => 'setono_sylius_mailer.ui.sent_at',
+                            'options' => [
+                                'field' => 'createdAt',
+                                'inclusive_to' => true,
+                            ],
+                        ],
+                    ],
                     'fields' => [
                         'subject' => [
                             'type' => 'string',
