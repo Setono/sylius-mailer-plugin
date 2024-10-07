@@ -35,6 +35,7 @@ final class SwiftMailerLoggerListener implements \Swift_Events_SendListener
 
         $sentEmail->setSubject($message->getSubject());
         $sentEmail->setHtmlBody($message->getBody());
+        $sentEmail->setFrom(self::convertAddresses($message->getFrom()));
         $sentEmail->setTo(self::convertAddresses($message->getTo()));
         $sentEmail->setReplyTo(self::convertAddresses($message->getReplyTo()));
         $sentEmail->setCc(self::convertAddresses($message->getCc()));
