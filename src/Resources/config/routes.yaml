@@ -1,3 +1,3 @@
 setono_sylius_mailer_admin:
     resource: "@SetonoSyliusMailerPlugin/Resources/config/routes/admin.yaml"
-    prefix: /admin
+    prefix: /admin/mailer
