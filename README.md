@@ -36,7 +36,7 @@ Enhance your Sylius store's mailing capabilities with this plugin. For now the p
     ```yaml
     # config/routes/setono_sylius_mailer.yaml
     setono_sylius_mailer:
-        resource: "@SetonoSyliusMailerPlugin/Resources/config/routing.yaml"
+        resource: "@SetonoSyliusMailerPlugin/Resources/config/routes.yaml"
     ```
 
 4. Run the database migrations:
