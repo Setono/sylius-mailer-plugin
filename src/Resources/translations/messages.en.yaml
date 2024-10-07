@@ -1,0 +1,15 @@
+setono_sylius_mailer:
+    ui:
+        from: From
+        mailer: Mailer
+        to: To
+        sent_at: Sent at
+        sent_emails: Sent emails
+        subject: Subject
+        show_sent_email: Show sent email
+        reply_to: Reply to
+        cc: CC
+        bcc: BCC
+        template: Template
+        html_email: HTML email
+        text_email: Text email

@@ -18,9 +18,7 @@ class SentEmail implements SentEmailInterface
 
     protected ?string $htmlBody = null;
 
-    protected ?string $senderName = null;
-
-    protected ?string $senderAddress = null;
+    protected ?array $from = null;
 
     protected ?array $to = null;
 
@@ -44,7 +42,7 @@ class SentEmail implements SentEmailInterface
 
     public function setSubject(?string $subject): void
     {
-        $this->subject = $subject;
+        $this->subject = null === $subject ? null : trim($subject);
     }
 
     public function getTextBody(): ?string
@@ -67,24 +65,14 @@ class SentEmail implements SentEmailInterface
         $this->htmlBody = $htmlBody;
     }
 
-    public function getSenderName(): ?string
+    public function getFrom(): array
     {
-        return $this->senderName;
+        return $this->from ?? [];
     }
 
-    public function setSenderName(?string $senderName): void
+    public function setFrom(?array $from): void
     {
-        $this->senderName = $senderName;
-    }
-
-    public function getSenderAddress(): ?string
-    {
-        return $this->senderAddress;
-    }
-
-    public function setSenderAddress(?string $senderAddress): void
-    {
-        $this->senderAddress = $senderAddress;
+        $this->from = $from;
     }
 
     public function getTo(): array

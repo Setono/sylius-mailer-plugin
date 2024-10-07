@@ -39,6 +39,7 @@
         "symfony/swiftmailer-bundle": "^2.3 || ^3.5",
         "symfony/web-profiler-bundle": "^5.4 || ^6.4 || ^7.0",
         "symfony/webpack-encore-bundle": "^1.17.2",
+        "synolia/sylius-mail-tester-plugin": "^2.5",
         "willdurand/negotiation": "^3.1"
     },
     "prefer-stable": true,

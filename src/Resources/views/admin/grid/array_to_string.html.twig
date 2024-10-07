@@ -1,0 +1,4 @@
+{# @var data list<scalar> #}
+{% set data = data|default([]) %}
+
+{{ data|join(', ') }}

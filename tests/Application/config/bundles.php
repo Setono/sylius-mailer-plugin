@@ -28,6 +28,7 @@ return [
     Sylius\Bundle\UiBundle\SyliusUiBundle::class => ['all' => true],
     Sylius\Bundle\ReviewBundle\SyliusReviewBundle::class => ['all' => true],
     Sylius\Bundle\CoreBundle\SyliusCoreBundle::class => ['all' => true],
+    Setono\SyliusMailerPlugin\SetonoSyliusMailerPlugin::class => ['all' => true],
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
     winzou\Bundle\StateMachineBundle\winzouStateMachineBundle::class => ['all' => true],
@@ -47,7 +48,6 @@ return [
     Sylius\Bundle\ThemeBundle\SyliusThemeBundle::class => ['all' => true],
     Sylius\Bundle\AdminBundle\SyliusAdminBundle::class => ['all' => true],
     Sylius\Bundle\ShopBundle\SyliusShopBundle::class => ['all' => true],
-    Setono\SyliusMailerPlugin\SetonoSyliusMailerPlugin::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
@@ -58,4 +58,5 @@ return [
     SyliusLabs\Polyfill\Symfony\Security\Bundle\SyliusLabsPolyfillSymfonySecurityBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Sylius\Calendar\SyliusCalendarBundle::class => ['all' => true],
+    Synolia\SyliusMailTesterPlugin\SynoliaSyliusMailTesterPlugin::class => ['all' => true],
 ];

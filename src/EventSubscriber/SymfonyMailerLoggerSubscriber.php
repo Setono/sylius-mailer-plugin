@@ -56,15 +56,8 @@ final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
         $sentEmail->setTextBody(self::convertBody($message->getTextBody()));
         $sentEmail->setHtmlBody(self::convertBody($message->getHtmlBody()));
 
-        $from = $message->getFrom();
-        if (count($from) > 0) {
-            $sentEmail->setSenderAddress($from[0]->getAddress());
-
-            $senderName = $from[0]->getName();
-            $sentEmail->setSenderName('' === $senderName ? null : $senderName);
-        }
-
         $sentEmail->setTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getTo())));
+        $sentEmail->setFrom(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getFrom())));
         $sentEmail->setReplyTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getReplyTo())));
         $sentEmail->setCc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getCc())));
         $sentEmail->setBcc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getBcc())));

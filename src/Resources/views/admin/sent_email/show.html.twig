@@ -1,0 +1,93 @@
+{# @var resource \Setono\SyliusMailerPlugin\Model\SentEmailInterface #}
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% block title %}{{ 'setono_sylius_mailer.ui.show_sent_email'|trans }} | {{ resource.subject }}{% endblock %}
+
+{% macro list(array) %}
+    {% if array is empty %}
+        <span class="gray text">{{ 'sylius.ui.empty'|trans }}</span>
+    {% else %}
+        <ul class="ui bulleted list">
+            {% for item in array %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro outputOrEmpty(input) %}
+    {% if input is null %}
+        <span class="gray text">{{ 'sylius.ui.empty'|trans }}</span>
+    {% else %}
+        {{ input }}
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+    {% include '@SetonoSyliusMailerPlugin/admin/sent_email/show/_header.html.twig' %}
+
+    <div class="ui grid">
+        <div class="sixteen wide mobile six wide computer column">
+            <h4 class="ui top attached large header">{{ 'sylius.ui.details'|trans }}</h4>
+            <div class="ui attached segment">
+                <table class="ui very basic celled table">
+                    <tbody>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'sylius.ui.subject'|trans }}</strong></td>
+                            <td>{{ resource.subject }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'sylius.ui.from'|trans }}</strong></td>
+                            <td>{{ _self.list(resource.from) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'setono_sylius_mailer.ui.reply_to'|trans }}</strong></td>
+                            <td>{{ _self.list(resource.replyTo) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'sylius.ui.to'|trans }}</strong></td>
+                            <td>{{ _self.list(resource.to) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'setono_sylius_mailer.ui.bcc'|trans }}</strong></td>
+                            <td>{{ _self.list(resource.bcc) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'setono_sylius_mailer.ui.cc'|trans }}</strong></td>
+                            <td>{{ _self.list(resource.cc) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'setono_sylius_mailer.ui.template'|trans }}</strong></td>
+                            <td>{{ _self.outputOrEmpty(resource.template) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="five wide"><strong class="gray text">{{ 'setono_sylius_mailer.ui.sent_at'|trans }}</strong></td>
+                            <td>{{ resource.createdAt|date }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="sixteen wide mobile ten wide computer column">
+            <h4 class="ui top attached large header">{{ 'setono_sylius_mailer.ui.html_email'|trans }}</h4>
+            <div class="ui attached segment">
+                {% if resource.htmlBody is null %}
+                    <span class="gray text">{{ 'sylius.ui.empty'|trans }}</span>
+                {% else %}
+                    {{ resource.htmlBody|setono_sylius_mailer_iframe }}
+                {% endif %}
+            </div>
+            <div class="ui hidden divider"></div>
+
+            <h4 class="ui top attached large header">{{ 'setono_sylius_mailer.ui.text_email'|trans }}</h4>
+            <div class="ui attached segment">
+                {% if resource.textBody is null %}
+                    <span class="gray text">{{ 'sylius.ui.empty'|trans }}</span>
+                {% else %}
+                    {{ resource.textBody|nl2br }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

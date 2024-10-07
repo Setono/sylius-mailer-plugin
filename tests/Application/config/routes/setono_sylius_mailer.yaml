@@ -1,0 +1,2 @@
+setono_sylius_mailer:
+    resource: "@SetonoSyliusMailerPlugin/Resources/config/routes.yaml"
