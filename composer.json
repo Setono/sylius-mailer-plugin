@@ -17,6 +17,7 @@
         "symfony/config": "^5.4 || ^6.4 || ^7.0",
         "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.0",
         "symfony/event-dispatcher": "^5.4 || ^6.4 || ^7.0",
+        "symfony/mailer": "^5.4 || ^6.4 || ^7.0",
         "twig/twig": "^2.0 || ^3.0",
         "webmozart/assert": "^1.11"
     },
@@ -33,7 +34,6 @@
         "symfony/intl": "^5.4 || ^6.4 || ^7.0",
         "symfony/property-info": "^5.4 || ^6.4 || ^7.0",
         "symfony/serializer": "^5.4 || ^6.4 || ^7.0",
-        "symfony/swiftmailer-bundle": "^2.3 || ^3.5",
         "symfony/web-profiler-bundle": "^5.4 || ^6.4 || ^7.0",
         "symfony/webpack-encore-bundle": "^1.17.2",
         "synolia/sylius-mail-tester-plugin": "^2.5",
