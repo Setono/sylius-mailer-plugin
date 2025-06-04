@@ -66,7 +66,14 @@ final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
             $sentEmail->setTemplate($message->getHtmlTemplate());
         }
 
-        $this->sentEmails[spl_object_hash($message)] = $sentEmail;
+        // The SentMessageEvent class does not exist in Symfony 5.4
+        if (class_exists(SentMessageEvent::class)) {
+            $this->sentEmails[spl_object_hash($message)] = $sentEmail;
+        } else {
+            $manager = $this->getManager($sentEmail);
+            $manager->persist($sentEmail);
+            $manager->flush();
+        }
     }
 
     public function save(SentMessageEvent $event): void
@@ -77,6 +84,7 @@ final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
         }
 
         $sentEmail = $this->sentEmails[spl_object_hash($message)];
+        unset($this->sentEmails[spl_object_hash($message)]);
 
         $manager = $this->getManager($sentEmail);
         $manager->persist($sentEmail);
