@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusMailerPlugin\DependencyInjection;
 
-use Setono\SyliusMailerPlugin\Model\SentEmail;
+use Setono\SyliusMailerPlugin\Model\EmailRecord;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -35,14 +35,14 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('sent_email')
+                        ->arrayNode('email_record')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                    ->scalarNode('model')->defaultValue(SentEmail::class)->cannotBeEmpty()->end()
+                                    ->scalarNode('model')->defaultValue(EmailRecord::class)->cannotBeEmpty()->end()
                                     ->scalarNode('repository')->cannotBeEmpty()->end()
                                     ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                     ->scalarNode('controller')->defaultValue(ResourceController::class)->end()

@@ -1,7 +1,7 @@
-{# @var resource \Setono\SyliusMailerPlugin\Model\SentEmailInterface #}
+{# @var resource \Setono\SyliusMailerPlugin\Model\EmailRecordInterface #}
 {% extends '@SyliusAdmin/layout.html.twig' %}
 
-{% block title %}{{ 'setono_sylius_mailer.ui.show_sent_email'|trans }} | {{ resource.subject }}{% endblock %}
+{% block title %}{{ 'setono_sylius_mailer.ui.show_email_record'|trans }} | {{ resource.subject }}{% endblock %}
 
 {% macro list(array) %}
     {% if array is empty %}
@@ -24,7 +24,7 @@
 {% endmacro %}
 
 {% block content %}
-    {% include '@SetonoSyliusMailerPlugin/admin/sent_email/show/_header.html.twig' %}
+    {% include '@SetonoSyliusMailerPlugin/admin/email_record/show/_header.html.twig' %}
 
     <div class="ui grid">
         <div class="sixteen wide mobile six wide computer column">

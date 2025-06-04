@@ -1,24 +1,24 @@
-setono_sylius_mailer_admin_sent_email:
+setono_sylius_mailer_admin_email_record:
     resource: |
         section: admin
-        alias: setono_sylius_mailer.sent_email
+        alias: setono_sylius_mailer.email_record
         permission: true
         templates: '@SyliusAdmin\\Crud'
         redirect: update
-        grid: setono_sylius_mailer_admin_sent_email
+        grid: setono_sylius_mailer_admin_email_record
         vars:
             index:
                 icon: 'envelope outline'
             show:
-                template: '@SetonoSyliusMailerPlugin/admin/sent_email/show.html.twig'
+                template: '@SetonoSyliusMailerPlugin/admin/email_record/show.html.twig'
     type: sylius.resource
 
-setono_sylius_mailer_admin_sent_email_show:
+setono_sylius_mailer_admin_email_record_show:
     path: /sent-emails/{id}
     methods: [GET]
     defaults:
-        _controller: setono_sylius_mailer.controller.sent_email::showAction
+        _controller: setono_sylius_mailer.controller.email_record::showAction
         _sylius:
             section: admin
             permission: true
-            template: "@SetonoSyliusMailerPlugin/admin/sent_email/show.html.twig"
+            template: "@SetonoSyliusMailerPlugin/admin/email_record/show.html.twig"

@@ -48,7 +48,7 @@ Enhance your Sylius store's mailing capabilities with this plugin. For now the p
 
 ## Usage
 
-After installation, the plugin will automatically log all emails sent from your Sylius store. You can view the logged emails in the admin panel under the "Mailer > Sent Emails" section.
+After installation, the plugin will automatically log all emails sent from your Sylius store. You can view the logged emails in the admin panel under the "Mailer > Email log" section.
 
 
 [ico-version]: https://poser.pugx.org/setono/sylius-mailer-plugin/v/stable
