@@ -7,4 +7,5 @@ return (new Configuration())
     ->ignoreUnknownClasses([
         Symfony\Component\Mailer\Event\SentMessageEvent::class, // This does not exist in SF5.4
     ])
+    ->disableReportingUnmatchedIgnores()
 ;

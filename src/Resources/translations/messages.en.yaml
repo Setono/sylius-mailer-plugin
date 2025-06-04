@@ -4,12 +4,13 @@ setono_sylius_mailer:
         mailer: Mailer
         to: To
         sent_at: Sent at
-        sent_emails: Sent emails
+        email_records: Email records
         subject: Subject
-        show_sent_email: Show sent email
+        show_email_record: Show email record
         reply_to: Reply to
         cc: CC
         bcc: BCC
         template: Template
         html_email: HTML email
         text_email: Text email
+        email_log: Email log

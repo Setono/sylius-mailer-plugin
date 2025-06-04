@@ -37,11 +37,11 @@ final class SetonoSyliusMailerExtension extends AbstractResourceExtension implem
     {
         $container->prependExtensionConfig('sylius_grid', [
             'grids' => [
-                'setono_sylius_mailer_admin_sent_email' => [
+                'setono_sylius_mailer_admin_email_record' => [
                     'driver' => [
                         'name' => 'doctrine/orm',
                         'options' => [
-                            'class' => '%setono_sylius_mailer.model.sent_email.class%',
+                            'class' => '%setono_sylius_mailer.model.email_record.class%',
                         ],
                     ],
                     'sorting' => [
@@ -102,7 +102,7 @@ final class SetonoSyliusMailerExtension extends AbstractResourceExtension implem
                                 'label' => 'sylius.ui.show',
                                 'options' => [
                                     'link' => [
-                                        'route' => 'setono_sylius_mailer_admin_sent_email_show',
+                                        'route' => 'setono_sylius_mailer_admin_email_record_show',
                                         'parameters' => [
                                             'id' => 'resource.id',
                                         ],

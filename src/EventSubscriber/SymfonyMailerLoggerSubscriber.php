@@ -6,7 +6,7 @@ namespace Setono\SyliusMailerPlugin\EventSubscriber;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Setono\Doctrine\ORMTrait;
-use Setono\SyliusMailerPlugin\Model\SentEmailInterface;
+use Setono\SyliusMailerPlugin\Model\EmailRecordInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,9 +23,9 @@ final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
     /**
      * Emails indexed by object hash
      *
-     * @var array<string, SentEmailInterface>
+     * @var array<string, EmailRecordInterface>
      */
-    private array $sentEmails = [];
+    private array $emailRecords = [];
 
     public function __construct(
         ManagerRegistry $managerRegistry,
@@ -49,29 +49,29 @@ final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
             return;
         }
 
-        /** @var SentEmailInterface $sentEmail */
-        $sentEmail = $this->emailFactory->createNew();
+        /** @var EmailRecordInterface $emailRecord */
+        $emailRecord = $this->emailFactory->createNew();
 
-        $sentEmail->setSubject($message->getSubject());
-        $sentEmail->setTextBody(self::convertBody($message->getTextBody()));
-        $sentEmail->setHtmlBody(self::convertBody($message->getHtmlBody()));
+        $emailRecord->setSubject($message->getSubject());
+        $emailRecord->setTextBody(self::convertBody($message->getTextBody()));
+        $emailRecord->setHtmlBody(self::convertBody($message->getHtmlBody()));
 
-        $sentEmail->setTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getTo())));
-        $sentEmail->setFrom(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getFrom())));
-        $sentEmail->setReplyTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getReplyTo())));
-        $sentEmail->setCc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getCc())));
-        $sentEmail->setBcc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getBcc())));
+        $emailRecord->setTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getTo())));
+        $emailRecord->setFrom(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getFrom())));
+        $emailRecord->setReplyTo(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getReplyTo())));
+        $emailRecord->setCc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getCc())));
+        $emailRecord->setBcc(array_values(array_map(static fn (Address $address) => $address->getAddress(), $message->getBcc())));
 
         if ($message instanceof TemplatedEmail) {
-            $sentEmail->setTemplate($message->getHtmlTemplate());
+            $emailRecord->setTemplate($message->getHtmlTemplate());
         }
 
         // The SentMessageEvent class does not exist in Symfony 5.4
         if (class_exists(SentMessageEvent::class)) {
-            $this->sentEmails[spl_object_hash($message)] = $sentEmail;
+            $this->emailRecords[spl_object_hash($message)] = $emailRecord;
         } else {
-            $manager = $this->getManager($sentEmail);
-            $manager->persist($sentEmail);
+            $manager = $this->getManager($emailRecord);
+            $manager->persist($emailRecord);
             $manager->flush();
         }
     }
@@ -79,15 +79,15 @@ final class SymfonyMailerLoggerSubscriber implements EventSubscriberInterface
     public function save(SentMessageEvent $event): void
     {
         $message = $event->getMessage()->getOriginalMessage();
-        if (!isset($this->sentEmails[spl_object_hash($message)])) {
+        if (!isset($this->emailRecords[spl_object_hash($message)])) {
             return;
         }
 
-        $sentEmail = $this->sentEmails[spl_object_hash($message)];
-        unset($this->sentEmails[spl_object_hash($message)]);
+        $emailRecord = $this->emailRecords[spl_object_hash($message)];
+        unset($this->emailRecords[spl_object_hash($message)]);
 
-        $manager = $this->getManager($sentEmail);
-        $manager->persist($sentEmail);
+        $manager = $this->getManager($emailRecord);
+        $manager->persist($emailRecord);
         $manager->flush();
     }
 

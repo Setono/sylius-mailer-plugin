@@ -22,10 +22,10 @@ final class AddMenuSubscriber implements EventSubscriberInterface
         $menu
             ->addChild('setono_sylius_mailer')
             ->setLabel('setono_sylius_mailer.ui.mailer')
-                ->addChild('setono_sylius_mailer_sent_emails', [
-                    'route' => 'setono_sylius_mailer_admin_sent_email_index',
+                ->addChild('setono_sylius_mailer_email_records', [
+                    'route' => 'setono_sylius_mailer_admin_email_record_index',
                 ])
-                ->setLabel('setono_sylius_mailer.ui.sent_emails')
+                ->setLabel('setono_sylius_mailer.ui.email_log')
                 ->setLabelAttribute('icon', 'truck')
         ;
     }
